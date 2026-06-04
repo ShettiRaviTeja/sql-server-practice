@@ -1,3 +1,4 @@
+-- To create a table in the database.
 CREATE TABLE persons(
 id INT NOT NULL,
 person_name VARCHAR(50) NOT NULL,
