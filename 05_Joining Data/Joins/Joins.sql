@@ -83,3 +83,24 @@ If we want only unmatching rows:
 	Only one table is important(master table): LEFT ANTI JOIN
 	Both tables are important: FULL ANTI JOIN.
 */
+
+
+/* USING SALESDB, RETRIEVE A LIST OF ALL ORDERS ALONG WITH THE RELATED CUSTOMER, PRODUCT AND EMPLOYEE DETAILS. FOR EACH ORDER DISPLAY:
+Order ID, Customer's name, Product name, Sales, Price, Sales Person's name */
+
+SELECT 
+	o.OrderID,
+	o.Sales,
+	c.FirstName AS CustomerFirstName,
+	c.LastName AS CustomerLastName,
+	p.Product,
+	p.Price,
+	e.FirstName AS EmployeeFirstName,
+	e.LastName AS EmployeeLastName
+FROM Sales.orders AS o
+LEFT JOIN Sales.Customers AS c
+ON o.CustomerID = c.CustomerID
+LEFT JOIN sales.Products AS p
+ON o.ProductID = p.ProductID
+LEFT JOIN sales.Employees AS e
+ON o.SalesPersonID = e.EmployeeID 
