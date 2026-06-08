@@ -17,7 +17,7 @@ FROM Sales.Orders
 
 /* In this we have 4 categories like
 	i. Part Extraction
-	ii. Format & Casting
+	ii. Formating & Casting
 	iii. Calculations
 	iv. Validation */
 
@@ -81,3 +81,27 @@ GROUP BY DATENAME(MONTH, OrderDate)
 SELECT *
 FROM Sales.Orders
 WHERE Month(OrderDate) = 2
+
+/* Functions Comparison:
+DAY, MONTH, YEAR, DATEPART => Output datatype is INT.
+DATENAME => STRING
+DATETRUNC => DATETIME
+EOMONTH => DATE */
+
+
+-- ii. Formating & Casting:
+/* We have different types of Date & Time formats:
+	International Standard (ISO 8601): YYYY - MM - DD
+	USA Standard: MM - DD - YYYY
+	European Standard: DD - MM - YYYY
+	SQL SERVER STANDARD: International Standard (YYYY - MM - DD)
+
+Formatting: Changing the format of the value from one to another. Changing how the data looks.
+Casting: Changing the data type from one to another. */
+
+-- Format(): Formats a date or time value.
+	-- Syntax: Format(value, format, [culture])
+SELECT
+	'Day ' + FORMAT(CreationTime, 'ddd MMM') +
+	' Q' + DATENAME(quarter, CreationTime) AS CustomFormat
+FROM Sales.Orders
