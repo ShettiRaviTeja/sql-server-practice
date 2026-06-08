@@ -1,4 +1,4 @@
-/* SQL Functions: It is a built-in SQL code:
+SQL Functions: It is a built-in SQL code:
 					- Accepts an input value
 					- Processes it
 					- Returns an output value
@@ -10,4 +10,4 @@ In single row functions we have: String functions
 								 Date & Time functions
 								 Null functions
 In multi row functions we have: Aggregate functions (Basic)
-								Window functions (Advanced) */
+								Window functions (Advanced) 
