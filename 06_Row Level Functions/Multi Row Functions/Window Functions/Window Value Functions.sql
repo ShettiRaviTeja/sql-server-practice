@@ -44,7 +44,7 @@ FROM
 ) t
 GROUP BY CustomerID
 
--- Default 
+
 -- Task 3: Find the lowest and highest sales for each product.
 SELECT
 ProductID,
