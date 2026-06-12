@@ -155,7 +155,7 @@ OPTION (MAXRECURSION 20) -- By using this, we can set a limit of recursions. Def
 
 -- Task 2: Show the employee hierarchy by displaying each employee's level within the organization.
 WITH EMP_Hierarchy_CTE AS
-(
+( 
 -- Anchor Query
 SELECT
 EmployeeID,
@@ -173,7 +173,10 @@ e.ManagerID,
 Level + 1
 FROM Sales.Employees e
 INNER JOIN EMP_Hierarchy_CTE ceh
-ON e.ManagerID = ceh.EmployeeID
+ON ceh.EmployeeID = e.ManagerID 
 )
 
 SELECT * FROM EMP_Hierarchy_CTE
+ORDER BY EmployeeID
+
+-- Important Point: The JOIN operation in a recursive CTE works exactly like a normal JOIN. The difference is that one side of the JOIN is the recursive CTE, whose contents change after each iteration. The JOIN repeatedly uses the newly generated rows from the CTE to find the next level of related rows.
