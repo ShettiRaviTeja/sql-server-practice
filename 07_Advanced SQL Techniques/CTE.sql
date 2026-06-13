@@ -23,13 +23,13 @@
 			WHERE...
 
 => We have 2 types of CTE:
-	1. None - Recursive CTE
+	1. Non - Recursive CTE
 		- Standalone CTE
 		- Nested CTE
 	2. Recursive CTE
 
 
-1. None-Recursive CTE: Executed only once without any repetition.
+1. Non-Recursive CTE: Executed only once without any repetition.
 - Standalone CTE: Defined and used independently. Runs independently as it's self-contained and doesn't rely on other CTE's or queries.
 	- Multiple Standalone CTE: We can define multiple standalone CTE's by using comma(,) between them.
 - Nested CTE: CTE inside another CTE. A nested CTE uses the result of another CTE, so it can't run independently.
