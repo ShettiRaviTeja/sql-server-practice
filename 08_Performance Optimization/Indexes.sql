@@ -121,13 +121,72 @@ FROM Sales.DBCustomers
 /* 
 => A Rowstore Table can have:
 	1 Clustered Rowstore Index
-	+
+				+
 	Many Nonclustered Rowstore Indexes
-	+
+				+
 	1 Nonclustered Columnstore Index
 
 => A Columnstore Table can have:
 	1 Clustered Columnstore Index
-	+
+				+
 	Many Nonclustered Rowstore Indexes */
 -- ========================================================================================================================
+
+-- COMPARISON OF STORAGE AMONG HEAP, ROWSTORE AND COLUMNSTORE INDEXES:
+-- Heap Storage
+SELECT *
+INTO FactInternetSales_HP
+FROM FactInternetSales
+----------------------------------------------------------------------------------
+-- RowStore
+SELECT *
+INTO FactInternetSales_RS
+FROM FactInternetSales
+
+CREATE CLUSTERED INDEX idx_FactInternetSales_RS_PK 
+ON FactInternetSales_RS (SalesOrderNumber, SalesOrderLineNumber)
+-----------------------------------------------------------------------------------
+-- ColumnStore
+SELECT *
+INTO FactInternetSales_CS
+FROM FactInternetSales
+
+CREATE CLUSTERED COLUMNSTORE INDEX idx_FactInternetSales_CS_PK 
+ON FactInternetSales_CS
+
+
+/* Storage Efficiency
+1 - Columnstore Index
+2 - Heap Index
+3 - Rowstore Index */
+
+-- ========================================================================================================================
+/* 3. Funtions:
+==> Unique Index: Ensures no duplicate values exist in specific column.
+- Benefits: Enforce Uniqueness
+			Slightly increase query performance
+- Performance: Writing to an unique index is slower than non-unique.
+			   Reading from an unique index is faster than non-unique.
+- Syntax:	
+		CREATE [UNIQUE] [CLUSTERED/NONCLUSTERED] [COLUMNSTORE] INDEX index_name 
+		ON table_name (column1, column2...) */
+
+SELECT * FROM Sales.Products
+CREATE UNIQUE INDEX idx_Products_Product ON Sales.Products (Product)
+-- Now we cannot able to insert the duplicate records into the Product column of Products table.
+
+/* ==> Filtered Index: An index that includes only rows meeting the specified conditions. 
+- Benefits: Targeted Optimization
+			Reduce Storage = Less data in the index
+- Syntax:	
+		CREATE [UNIQUE] [NONCLUSTERED] INDEX index_name 
+		ON table_name (column1, column2...)
+		WHERE [Condition]
+- Note: We cannot create a filtered index on a clustered index and columnstore index. */
+SELECT * 
+FROM SALES.Customers
+WHERE Country = 'USA'
+
+CREATE INDEX idx_Customers_Country
+ON Sales.Customers (Country)
+WHERE Country = 'USA'
