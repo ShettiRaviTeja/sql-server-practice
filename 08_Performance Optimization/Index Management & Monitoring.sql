@@ -97,7 +97,7 @@ STATISTICS COMMANDS:
 						DBCC SHOW_STATISTICS
 						(
 							'Table_Name'
-							'Index_Name'
+							'Index_Name/Statistics_Name'
 						);
 						SELECT * FROM sys.stats;
 
