@@ -94,7 +94,12 @@ STATISTICS COMMANDS:
 						UPDATE STATISTICS TableName WITH FULLSCAN;
 						UPDATE STATISTICS TableName StatisticName;
 						EXEC sp_updatestats;
-						DBCC SHOW_STATISTICS;
+						DBCC SHOW_STATISTICS
+						(
+							'Table_Name'
+							'Index_Name'
+						);
+						SELECT * FROM sys.stats;
 
 PERFORMANCE COMMANDS:
 						SET STATISTICS IO ON;

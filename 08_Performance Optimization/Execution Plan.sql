@@ -26,3 +26,52 @@ GROUP BY d.EnglishProductName
 OPTION (HASH JOIN) = Used to force the server to use Hash Join. 
 WITH (FORCESEEK) = Forcing the server to seek the table instead of scan.
 WITH (INDEX(Index_Name)) = Forcing to use the particular index.
+
+INDEXING STRATEGY:
+1. Initial Indexing Strategy:
+	- First of all, we should define the objectives of our project like what is the main goal of our indexing strategy.
+	- Here we have 2 types of databases: OLAP (Online Analytical Processing) and OLTP (Online Transactional Processing).
+	- We should have 2 strategies: Optimize Read Performance and Optimize Write Performance.
+	- In OLAP system, the main goal is to Optimize READ Performance.
+	- Whereas in OLTP system, the main goal is to Optimize WRITE Performance.
+	- Because in OLAP system, we will perform WRITE operation for the ETL process. Usually it is one time process and occurs at the night. So there is no need of optimize this operation in this particular system.
+	- In OLAP, in order to optimize the READ performance we should use COLUMNSTORE index.
+	- In OLTP, we should create CLUSTERED index for each primary key.
+Key Point: OLTP systems are optimized for fast transactional operations such as INSERT, UPDATE, DELETE, and point lookups. OLAP systems are optimized for large-scale analytical queries involving aggregations, joins, and reporting, where read performance is the primary focus.
+					OLTP = Write Only
+					OLAP = Read Only
+
+2. Usage Patterns Indexing: 
+	- Identify frequently used tables and columns.
+			Most Important Tables???
+			Most Important Columns???
+	- Choose Right Index
+	- Test Index
+
+3. Scenario Based Indexing: 
+	- Identify slow queries
+	- Check Execution Plan
+	- Choose Right Index
+	- Compare (Test) Execution Plans
+
+4. Monitoring and Maintenance:
+	- Monitor Index Usage
+	- Monitor Missing Indexes
+	- Monitor Duplicate Indexes
+	- Update Statistics
+	- Monitor Fragmentations
+
+*/
+-- To identify slow queries
+SELECT 
+	qs.total_elapsed_time TotalElapsedTime,
+	qs.execution_count,
+	qs.total_worker_time TotalCPUTime,
+	qs.last_execution_time,
+	qt.text QueryText
+FROM sys.dm_exec_query_stats qs
+CROSS APPLY 
+	sys.dm_exec_sql_text(qs.sql_handle) qt
+
+-- To see the missing indexes
+SELECT * FROM sys.dm_db_missing_index_details
